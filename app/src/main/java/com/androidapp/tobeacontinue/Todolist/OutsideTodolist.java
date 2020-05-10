@@ -1,15 +1,13 @@
 package com.androidapp.tobeacontinue.Todolist;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
-import com.androidapp.tobeacontinue.NoteWriteFragment;
+import com.androidapp.tobeacontinue.Note;
 import com.androidapp.tobeacontinue.OutsideFragment;
 import com.androidapp.tobeacontinue.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,7 +17,7 @@ public class OutsideTodolist extends AppCompatActivity implements OnTabItemSelec
     //비콘 프레그먼트에서 각 버튼을 클릭 시 열리는 새로운 액티비티
 
     OutsideFragment outsideFragment;
-    NoteWriteFragment noteFragment;         //작성 fragment
+   // NoteWriteFragment noteFragment;         //작성 fragment
 
     BottomNavigationView bottomNavigationView;
 
@@ -29,7 +27,7 @@ public class OutsideTodolist extends AppCompatActivity implements OnTabItemSelec
         setContentView(R.layout.activity_house_todolist);
 
         outsideFragment = new OutsideFragment();
-        noteFragment = new NoteWriteFragment();
+     //   noteFragment = new NoteWriteFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container1, outsideFragment).commit();
 
@@ -45,7 +43,7 @@ public class OutsideTodolist extends AppCompatActivity implements OnTabItemSelec
 
                     case R.id.tab2:
                         Toast.makeText(getApplicationContext(),"두 번째 탭 선택됨",Toast.LENGTH_SHORT).show();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container1,noteFragment).commit();
+            //            getSupportFragmentManager().beginTransaction().replace(R.id.container1,noteFragment).commit();
                         return true;
                 }
                 return false;
@@ -61,5 +59,13 @@ public class OutsideTodolist extends AppCompatActivity implements OnTabItemSelec
         }else if(position == 1){
             bottomNavigationView.setSelectedItemId(R.id.tab2);
         }
+    }
+
+    @Override
+    public void showNoteWriteFragment(Note item) {
+    //    noteFragment = new NoteWriteFragment();
+     //   noteFragment.setItem(item);
+
+    //    getSupportFragmentManager().beginTransaction().replace(R.id.container1,noteFragment).commit();
     }
 }

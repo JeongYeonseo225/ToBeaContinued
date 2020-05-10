@@ -12,7 +12,7 @@
         <activity android:name=".Todolist.OutsideTodolist"/>
         <activity android:name=".Todolist.CafeteriaTodolist"></activity>
         <activity android:name=".Todolist.SchoolTodolist" />
-        <activity android:name=".Todolist.HouseTodolist" />
+        <activity android:name=".Todolist.HouseTodolist"/>
         <activity
             android:name=".MenuActivity"
             android:theme="@style/AppTheme.NoActionBar" />

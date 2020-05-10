@@ -1,22 +1,27 @@
 package com.androidapp.tobeacontinue.Todolist;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.androidapp.tobeacontinue.HouseFragment;
+import com.androidapp.tobeacontinue.Note;
 import com.androidapp.tobeacontinue.NoteDatabase;
 import com.androidapp.tobeacontinue.NoteWriteFragment;
 import com.androidapp.tobeacontinue.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class HouseTodolist extends AppCompatActivity implements OnTabItemSelectedListener,AutoPermissionListener{
+public class HouseTodolist extends AppCompatActivity implements OnTabItemSelectedListener,AutoPermissionsListener{
     //비콘 프레그먼트에서 각 버튼을 클릭 시 열리는 새로운 액티비티
 
     private static final String TAG = "HouseTodolist";
@@ -102,25 +107,42 @@ public class HouseTodolist extends AppCompatActivity implements OnTabItemSelecte
             bottomNavigationView.setSelectedItemId(R.id.tab1);
         }else if(position == 1){
             noteFragment = new NoteWriteFragment();
-            bottomNavigationView.setSelectedItemId(R.id.tab2);
+            getSupportFragmentManager().beginTransaction().replace(R.id.container1,noteFragment).commit();
         }
     }
 
-    public void showFragment2(Note item) {
-
+    @Override
+    public void showNoteWriteFragment(Note item) {
         noteFragment = new NoteWriteFragment();
         noteFragment.setItem(item);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, noteFragment).commit();
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.container1,noteFragment).commit();
     }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        AutoPermissions.Companion.parsePermissions(this, requestCode, permissions, this);
+        AutoPermissions.Companion.parsePermissions(this, requestCode, permissions, (AutoPermissionsListener) this);
     }
 
 
+    @Override
+    public void onDenied(int requestCode, String[] permissions) {
+        Toast.makeText(this,"permissions denied : "+permissions.length, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGranted(int requestCode, String[] permissions) {
+        Toast.makeText(this,"permissions granted : "+permissions.length, Toast.LENGTH_SHORT).show();
+    }
+
+    public void getCurrentTime(){
+        currentDate = new Date();
+        currentDateString = dateFormat2.format(currentDate);
+        if(noteFragment != null){
+            noteFragment.setDateString(currentDateString);
+        }
+    }
 }
